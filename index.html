@@ -4,38 +4,73 @@
   <meta charset="UTF-8">
   <title>San Valentín ❤️</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap');
+
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       text-align: center;
-      background: linear-gradient(to bottom, #ffcccc, #ffe6e6);
+      background: linear-gradient(270deg, #ffcccc, #ffe6e6, #ffd1dc);
+      background-size: 600% 600%;
+      animation: fondo 20s ease infinite;
       overflow: hidden;
       padding: 20px;
     }
+
+    @keyframes fondo {
+      0% {background-position:0% 50%}
+      50% {background-position:100% 50%}
+      100% {background-position:0% 50%}
+    }
+
     h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 42px;
       color: #d10056;
-      margin-top: 30px;
+      margin-top: 20px;
+      animation: brillo 3s infinite alternate;
     }
-    p {
-      font-size: 18px;
-      color: #333;
-      max-width: 600px;
-      margin: 20px auto;
-      line-height: 1.6;
+
+    @keyframes brillo {
+      from { text-shadow: 0 0 5px #fff; }
+      to { text-shadow: 0 0 20px #ff6699; }
     }
+
     .mensaje {
-      background: #fff0f5;
+      background: rgba(255, 240, 245, 0.9);
       border: 2px solid #d10056;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(209,0,86,0.3);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 700px;
+      box-shadow: 0 0 25px rgba(209,0,86,0.3);
+      font-size: 18px;
+      line-height: 1.8;
+      text-align: left;
     }
+
+    /* Máquina de escribir */
+    .typewriter {
+      display: inline-block;
+      border-right: 2px solid #d10056;
+      white-space: pre-wrap;
+      overflow: hidden;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0% { border-color: transparent; }
+      50% { border-color: #d10056; }
+      100% { border-color: transparent; }
+    }
+
     /* Corazones flotando */
     .heart {
       position: absolute;
       color: #ff3366;
-      font-size: 24px;
-      animation: float 6s infinite;
+      font-size: 28px;
+      animation: float 8s infinite;
     }
+
     @keyframes float {
       0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
       50% { opacity: 1; }
@@ -47,37 +82,55 @@
   <h1>💖 Para mi preciosa hermosa 💖</h1>
 
   <div class="mensaje">
-    <p>
-      Aunque la distancia por ahora nos separe, quiero que sepas que te quiero muchisimooo mi preciosa hermosa, 
-      te mando muchos besitos, procura no estresarte de más, sigo ansioso de vernos y la verdad que pinche ilusión más bonita.  
-    </p>
-    <p>
-      Desde que pudimos interactuar más ese 25 de diciembre, siento que no sé, cosas del destino jaja.  
-      Toma agüita y cuídate muchoooo.  
-    </p>
-    <p>
-      Att: Yesff; apodo clave; el hombre que te quiere hacer feliz de todas las maneras posibles jsjs 💕
-    </p>
+    <span id="texto" class="typewriter"></span>
   </div>
 
-  <!-- Música de fondo con controles -->
-  <audio autoplay loop controls>
-    <source src="fuerza regida enculado.mp3" type="audio/mpeg">
+  <!-- Música de fondo -->
+  <audio id="musica" autoplay loop>
+    <source src="fuerza-regida-enculado.mp3" type="audio/mpeg">
     Tu navegador no soporta audio.
   </audio>
 
   <script>
+    // Texto con efecto máquina de escribir
+    const mensaje = `Aunque la distancia por ahora nos separe, quiero que sepas que te quiero muchísimo mi preciosa hermosa.
+Te mando muchos besitos y deseo que cada día esté lleno de calma y alegría para ti.
+
+Procura no estresarte de más, porque yo sigo ansioso de vernos y la verdad que esta ilusión que siento es la más bonita de todas.
+Desde que pudimos interactuar más ese 25 de diciembre, siento que son cosas del destino que nos acercan.
+
+Toma agüita, cuídate mucho y recuerda que siempre pienso en ti.
+Att: Yesff, tu apodo clave, el hombre que te quiere hacer feliz de todas las maneras posibles jsjs 💕`;
+
+    let i = 0;
+    function escribir() {
+      if (i < mensaje.length) {
+        document.getElementById("texto").innerText += mensaje.charAt(i);
+        i++;
+        setTimeout(escribir, 50); // velocidad de escritura
+      }
+    }
+    escribir();
+
     // Corazones flotando
     function crearCorazon() {
       const heart = document.createElement("div");
       heart.className = "heart";
       heart.innerText = "❤";
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
+      setTimeout(() => heart.remove(), 8000);
     }
-    setInterval(crearCorazon, 500);
+    setInterval(crearCorazon, 700);
+
+    // Forzar autoplay en móviles (requiere interacción mínima)
+    document.addEventListener("click", () => {
+      const musica = document.getElementById("musica");
+      if (musica.paused) {
+        musica.play();
+      }
+    });
   </script>
 </body>
 </html>
